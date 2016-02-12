@@ -8,7 +8,9 @@ ENV GCCARM_VER 5_2-2015q4
 ENV GCCARM_URL https://launchpad.net/gcc-arm-embedded/5.0/5-2015-q4-major/+download/gcc-arm-none-eabi-5_2-2015q4-20151219-linux.tar.bz2
 
 # base deps
-RUN apt-get update && apt-get install -y \
+RUN dpkg --add-architecture i386
+RUN apt-get update
+RUN apt-get install -y \
 	build-essential \
 	git \
 	make \
@@ -19,6 +21,10 @@ RUN apt-get update && apt-get install -y \
 	python-dev \
 	libffi-dev \
 	libssl-dev \
+	libc6-i386 \
+	libc6:i386 \
+	libncurses5:i386 \
+	libstdc++6:i386 \
 	wget
 
 # ota-mkfw
