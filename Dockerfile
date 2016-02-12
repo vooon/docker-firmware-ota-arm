@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
 	build-essential \
 	git \
 	make \
+	python-empy \
 	python-dateutil \
 	python-setuptools \
 	python-pip \
