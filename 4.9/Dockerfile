@@ -1,40 +1,42 @@
+# -*- dockerfile -*-
+# vim:ts=2 sw=2 et:
+
 FROM ubuntu
 MAINTAINER Vladimir Ermakov <vooon341@gmail.com>
 
-ENV OTAMKFW_TAG 0.1.2
-ENV OTAMKFW_URL https://github.com/vooon/ota-mkfw/archive
+ENV OTA_VERSION 0.2.0
+ENV OTA_URL https://github.com/vooon/ota-mkfw/archive/${OTA_VERSION}.tar.gz
 
-ENV GCCARM_VER 4_9-2015q3
+ENV GCCARM_VERSION 4_9-2015q3
 ENV GCCARM_URL https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-linux.tar.bz2
 
+ENV PATH "$PATH:/opt/gcc-arm-none-eabi-${GCCARM_VERSION}/bin"
+
 # base deps
-RUN dpkg --add-architecture i386 && apt-get update
-RUN apt-get install --no-install-recommends -y \
-	build-essential \
-	git \
-	make \
-	python-empy \
-	python-dateutil \
-	python-setuptools \
-	python-pip \
-	python-dev \
-	libffi-dev \
-	libssl-dev \
-	libc6-i386 \
-	libc6:i386 \
-	libncurses5:i386 \
-	libstdc++6:i386 \
-	wget
+RUN dpkg --add-architecture i386 \
+  && apt-get update \
+  && apt-get install --no-install-recommends -y \
+    build-essential \
+    git \
+    make \
+    python-empy \
+    python-dateutil \
+    python-setuptools \
+    python-pip \
+    python-dev \
+    libffi-dev \
+    libssl-dev \
+    libc6-i386 \
+    libc6:i386 \
+    libncurses5:i386 \
+    libstdc++6:i386 \
+    curl \
+  && rm -rf /var/lib/apt/lists/*
 
 # ota-mkfw
-RUN pip install ${OTAMKFW_URL}/${OTAMKFW_TAG}.tar.gz
+RUN pip install "$OTA_URL"
 
 # arm-none-eabi toolchain
-RUN wget ${GCCARM_URL} -O gcc-arm-none-eabi.tar.bz2 && \
-	tar xvf gcc-arm-none-eabi.tar.bz2 -C /opt && \
-	rm -f gcc-arm-none-eabi.tar.bz2 && \
-	ln -s /opt/gcc-arm-none-eabi-${GCCARM_VER} /opt/arm-toolchain
-
-# cleanup
-RUN apt-get clean && \
-	rm -rf /var/lib/apt
+RUN curl -SL "$GCCARM_URL" -o toolchain.tar.bz2 \
+  && tar -C /opt -xf toolchain.tar.bz2 \
+  && rm -f toolchain.tar.bz2
