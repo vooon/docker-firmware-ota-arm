@@ -26,9 +26,9 @@ RUN pip install ${OTAMKFW_URL}/${OTAMKFW_TAG}.tar.gz
 
 # arm-none-eabi toolchain
 RUN wget ${GCCARM_URL} -O gcc-arm-none-eabi.tar.bz2 && \
-	tar xvf gcc-arm-none-eabi.tar.bz2 && \
+	tar xvf gcc-arm-none-eabi.tar.bz2 -C /opt && \
 	rm -f gcc-arm-none-eabi.tar.bz2 && \
-	ln -s gcc-arm-none-eabi-${GCCARM_VER} /opt/arm-toolchain
+	ln -s /opt/gcc-arm-none-eabi-${GCCARM_VER} /opt/arm-toolchain
 
 # cleanup
 RUN apt-get clean && \
