@@ -4,7 +4,7 @@
 FROM ubuntu
 MAINTAINER Vladimir Ermakov <vooon341@gmail.com>
 
-ENV OTA_VERSION 0.2.0
+ENV OTA_VERSION 0.3.0
 ENV OTA_URL https://github.com/vooon/ota-mkfw/archive/${OTA_VERSION}.tar.gz
 
 ENV GCCARM_VERSION 5_2-2015q4
