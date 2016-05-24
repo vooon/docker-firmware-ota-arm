@@ -24,6 +24,11 @@ RUN dpkg --add-architecture i386 \
     python-setuptools \
     python-pip \
     python-dev \
+    python3-yaml \
+    python3-mako \
+    python3-setuptools \
+    python3-pip \
+    python3-dev \
     libffi-dev \
     libssl-dev \
     libc6-i386 \
