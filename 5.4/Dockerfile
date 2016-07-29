@@ -32,7 +32,7 @@ RUN dpkg --add-architecture i386 \
 
 # python modules
 COPY requirements.txt /tmp/
-RUN pip install -r /tmp/requirements.txt
+RUN pip3 install -r /tmp/requirements.txt
 
 # arm-none-eabi toolchain
 RUN curl -SL "$GCCARM_URL" -o toolchain.tar.bz2 \
